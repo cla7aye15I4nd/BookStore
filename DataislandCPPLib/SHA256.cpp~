@@ -1,9 +1,0 @@
-#include <iostream>
-#include "SHA256.hpp"
-
-
-int main() {
-    std::cerr << rem::sha256sum("1") << '\n';
-    std::cerr << rem::sha256sum("于峥111");
-    return 0;
-}
