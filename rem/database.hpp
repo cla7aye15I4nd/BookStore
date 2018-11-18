@@ -16,7 +16,7 @@ namespace sjtu{
         naive_database () {}
         naive_database (string _dir) : dir(_dir) {}
         
-        void save(const string& key, const T& value) const{
+        void save(const string& key, const T& value = T()) const{
             std::ofstream os(dir + key + ".bin");
             os << value;
             os.close();   

@@ -6,5 +6,3 @@ int main() {
     bookstore.run();
     return 0;
 }
-
-
