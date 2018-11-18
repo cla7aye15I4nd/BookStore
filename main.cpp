@@ -1,10 +1,10 @@
-#include <cstring>
+#include "bookstore.hpp"
 #include <iostream>
 
+sjtu::bookstore bookstore;
 int main() {
-    std::string s;
-    std::cin >> s;
-    for (auto c : s)
-        std::cout << int(c) << ' ';
-    std::cerr << sizeof (char) << '\n';
+    bookstore.run();
+    return 0;
 }
+
+

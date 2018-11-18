@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace rem{
+namespace sjtu{
     using byte_t = uint8_t;
     using word_t = uint32_t;
     
