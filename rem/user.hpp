@@ -34,14 +34,16 @@ namespace sjtu{
 
     class userSystem{
     private:
-        int level;
+        int _level;
         naive_database<user_t> db;
         
     public:
         string username;
+
+        int level() const{ return _level; }
         
         userSystem () : db("user/"){
-            level = 7;
+            _level = 7;
             username = "root";
             if (!db.exist(sha256sum("root"))) {
                 db.save(sha256sum("root"), user_t(7, "root", "sjtu"));
@@ -51,10 +53,10 @@ namespace sjtu{
         void login(const string& userid, const string& passwd = "") {
             user_t aim;
             if (db.get(sha256sum(userid), aim)) {
-                if (aim.level >= level && aim.password != sha256sum(passwd))
+                if (aim.level >= _level && aim.password != sha256sum(passwd))
                     error();
                 else {
-                    level = aim.level;
+                    _level = aim.level;
                     username = aim.username;
                 }
             } else
@@ -62,15 +64,15 @@ namespace sjtu{
         }
 
         void logout() {
-            if (level == 0) error();
+            if (_level == 0) error();
             else {
-                level = 0;
+                _level = 0;
                 username = GUEST;
             }
         }
 
         void useradd(const string& userid, const user_t& aim) {
-            if (level < 3 || aim.level >= level || db.exist(sha256sum(userid))) error();
+            if (_level < 3 || aim.level >= _level || db.exist(sha256sum(userid))) error();
             else db.save(sha256sum(userid), aim);
         }
 
@@ -80,14 +82,14 @@ namespace sjtu{
         }
 
         void erase(const string& userid) {
-            if (level < 7 || !db.erase(sha256sum(userid)))
+            if (_level < 7 || !db.erase(sha256sum(userid)))
                 error();
         }
 
         void modify(const string& userid, const string& pw0, const string& pw1 = "") {
             user_t aim;
-            if (level >= 1 && db.get(sha256sum(userid), aim)) {
-                if (level == 7) aim.password = sha256sum(pw0);
+            if (_level >= 1 && db.get(sha256sum(userid), aim)) {
+                if (_level == 7) aim.password = sha256sum(pw0);
                 else if (aim.password != sha256sum(pw0)) {
                     error();
                     return;

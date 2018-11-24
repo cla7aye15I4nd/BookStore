@@ -2,6 +2,7 @@
 #define BOOKSTORE_HPP
 
 #include "rem/ext.hpp"
+#include "rem/naive_database.hpp"
 #include "rem/database.hpp"
 #include "rem/SHA256.hpp"
 #include "rem/user.hpp"
@@ -18,11 +19,17 @@ namespace sjtu{
         {"register", 3},
         {"delete", 4},
         {"passwd", 5},
+        {"select", 6},
+        {"modify", 7},
+        {"import", 8},
+        {"show", 9},
+        {"buy", 10}
     };
     
     class bookstore{
     private:
         userSystem user;
+        bookSystem book;
 
     public:
         bookstore () {}
@@ -60,6 +67,16 @@ namespace sjtu{
                     if (para.size() < 3 || para.size() > 4) error();
                     else para.size() == 3 ? user.modify(para[1], para[2]) : user.modify(para[1], para[2], para[3]);
                     break;
+                case 6:
+                    if (para.size() != 2 || user.level() < 3) error();
+                    else book.select(para[0]);
+                    break;
+                case 7:
+                    if (para.size() != 2 || user.level() < 1) error();
+                    else book.modify(para[1]);
+                    break;
+                default:
+                    error();
                 }
             }
 
