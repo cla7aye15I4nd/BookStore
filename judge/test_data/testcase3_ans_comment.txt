@@ -1,0 +1,31 @@
+root
+Invalid // x
+Invalid // useradd
+Invalid // useradd
+Invalid // useradd
+Invalid // delete
+
+Invalid
+Invalid
+Invalid
+Invalid
+Invalid
+Invalid
+Invalid
+Invalid // su
+
+worker0
+Invalid // passwd
+Invalid // register
+Invalid // delete
+
+root
+Invalid // x delete
+
+user0
+Invalid // passwd
+
+user0
+Invalid // delete
+
+Invalid

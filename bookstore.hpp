@@ -6,6 +6,7 @@
 #include "rem/SHA256.hpp"
 #include "rem/user.hpp"
 #include "rem/book.hpp"
+
 #include <map>
 
 namespace sjtu{

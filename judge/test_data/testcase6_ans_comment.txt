@@ -1,0 +1,24 @@
+root
+Invalid // modify name
+Invalid // import
+Invalid // modify ISBN
+
+Invalid // show
+Invalid // show
+
+user
+9787544287723	芒果街，我自己的小屋	桑德拉·希斯内罗丝	文学|随笔	0.00	48本
+
+root
++ 0.00 - 233.33
+
+user
+Invalid // buy
+
+root
+
+user
+9787544287723	芒果街，我自己的小屋	桑德拉·希斯内罗丝	文学|随笔	40.00	25本
+
+root
++ 2080.00 - 243.33

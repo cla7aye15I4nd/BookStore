@@ -1,0 +1,37 @@
+useradd worker0 worker0_password 3 丁谦清
+passwd root sjtuuu
+logout
+su worker0 worker0_password
+useradd user0 user0_password 1 叶发
+register user1 user1_password 韩青
+logout
+su root sjtuuu
+delete worker0
+logout
+su user0 user0_password
+passwd user1 user1_password user1_passworddd
+logout
+su user0 user0_password
+logout
+su user1 user1_passworddd
+logout
+su root sjtuuu
+delete user0
+delete user1
+useradd worker1 worker1_password 3 林娟
+useradd user2 user2_password 1 常君莲
+register user3 user3_password 郭涛心
+logout
+su user2 user2_password
+logout
+su user3 user3_password
+logout
+su worker1 worker1_password
+useradd user4 user4_password 1 姜启
+register user5 user5_password 蒋爱枝
+logout
+su user4 user4_password
+logout
+su user5 user5_password
+logout
+exit
