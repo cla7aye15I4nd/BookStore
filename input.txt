@@ -1,7 +1,3 @@
 select 9787544287722
-modify -name="芒果街，我自己的小屋" -keyword="文学|随笔" -author="桑德拉·希斯内罗丝" -price=45.00
-select 9787559410443
-modify -name="内陆岛屿" -keyword="文学|小说" -author="宋阿曼" -price=38
-show -keyword="文学"
 show
 exit

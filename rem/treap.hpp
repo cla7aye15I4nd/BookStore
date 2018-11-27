@@ -68,8 +68,9 @@ public:
 
     int find(node u, const DataType &key) {
         if (u == nullptr) return -1;
-        if (get(u->key) == key) return u->key;
-        return find(u -> ch[get(u->key) > key], key);
+        auto e = get(u->key);
+        if (e == key) return u->key;
+        return find(u -> ch[e > key], key);
     }
     
     void set(const std::string &file, auto _get) {

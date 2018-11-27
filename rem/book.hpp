@@ -178,6 +178,21 @@ namespace sjtu{
                 mybook.print();
             }
         }
+
+        void import(int quantity, int cost_price) {
+            if (id == -1) error();
+            erase(bk, id);
+            bk.count += quantity;
+            insert(bk);
+        }
+
+        void buy(string _isbn, int quantity) {
+            if (id == -1) error();
+            book mybook = isbn.find(_isbn);
+            erase(mybook, id);
+            mybook.count += quantity;
+            insert(mybook);
+        }
     
     private:
         Treap<std::string> isbn, name, author, keyword, price;
