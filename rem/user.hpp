@@ -72,7 +72,8 @@ namespace sjtu{
         }
 
         void useradd(const string& userid, const user_t& aim) {
-            if (_level < 3 || aim.level >= _level || db.exist(sha256sum(userid))) error();
+            if (_level < 3 || aim.level >= _level || db.exist(sha256sum(userid)))
+                error();
             else db.save(sha256sum(userid), aim);
         }
 
@@ -80,7 +81,7 @@ namespace sjtu{
             if (db.exist(sha256sum(userid))) error();
             else db.save(sha256sum(userid), user_t(1, name, passwd));
         }
-
+        
         void erase(const string& userid) {
             if (_level < 7 || !db.erase(sha256sum(userid)))
                 error();

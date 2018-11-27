@@ -18,7 +18,7 @@ show -ISBN=9787559609304
 show -name="颠覆者：周鸿自传"
 show -name="颠覆者：周鸿祎自传"
 show -author="周鸿祎"
-logout
+logoutq
 su worker worker_password
 select 9787559410443
 modify -name="内陆岛屿" -keyword="文学|小说" -author="宋阿曼" -price=38

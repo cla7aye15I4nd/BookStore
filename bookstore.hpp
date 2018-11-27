@@ -69,11 +69,14 @@ namespace sjtu{
                     break;
                 case 6:
                     if (para.size() != 2 || user.level() < 3) error();
-                    else book.select(para[0]);
+                    else book.select(para[1]);
                     break;
                 case 7:
-                    if (para.size() != 2 || user.level() < 1) error();
-                    else book.modify(para[1]);
+                    if (para.size() < 2 || user.level() < 1) error();
+                    else {
+                        para.erase(para.begin());
+                        book.modify(para);
+                    }
                     break;
                 default:
                     error();

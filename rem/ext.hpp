@@ -3,16 +3,16 @@
 
 #include <string>
 #include <vector>
+#include <sstream>
 
 namespace sjtu{
     using string = std::string;
     using parameter = std::vector<string>;
 
     int to_int(const string& str) {
-        int r = 0;
-        for (auto c : str)
-            r = r * 10 + c - '0';
-        return r;
+        std::istringstream os(str);
+   	double value; os >> value;
+        return value;
     }
     
     parameter split(const string& str, char ch = ' ') {
