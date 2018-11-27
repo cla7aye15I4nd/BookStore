@@ -101,6 +101,13 @@ public:
             find (u->ch[1], left, right, vec);
         }
     }
+
+    void find(node u, std::vector<int> &vec) {
+        if (u == nullptr) return;
+        find (u->ch[0], vec);
+        vec.push_back(u->key);
+        find (u->ch[1], vec);
+    }
     
     Treap () {
         memory_pool = new Node [MEMORY_SIZE];
@@ -128,6 +135,11 @@ public:
                           const DataType& right) {
         std::vector<int> vec;
         find(root, left, right, vec);
+        return vec;
+    }
+    std::vector<int> find() {
+        std::vector<int> vec;
+        find(root,  vec);
         return vec;
     }
     

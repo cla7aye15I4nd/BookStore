@@ -14,6 +14,12 @@ namespace sjtu{
    	double value; os >> value;
         return value;
     }
+
+    int to_int_100(const string& str) {
+        std::istringstream os(str);
+   	double value; os >> value;
+        return value * 100;
+    }
     
     parameter split(const string& str, char ch = ' ') {
         parameter retval;

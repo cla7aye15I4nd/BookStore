@@ -23,7 +23,8 @@ namespace sjtu{
         {"modify", 7},
         {"import", 8},
         {"show", 9},
-        {"buy", 10}
+        {"buy", 10},
+        {"load", 11},
     };
     
     class bookstore{
@@ -34,7 +35,7 @@ namespace sjtu{
     public:
         bookstore () {}
 
-        bool runCommand(const string& command) {
+        bool runCommand(const string& command, std::ifstream &is) {
             parameter para = split(command);
 
             if (!cmd.count(para.front()))
@@ -78,6 +79,18 @@ namespace sjtu{
                         book.modify(para);
                     }
                     break;
+                case 9:
+                    if (user.level() < 1) error();
+                    else if (para.size() == 1) book.show();
+                    else if (para[1] == "finance") {
+                        if (para.size() > 3) error();
+                        //if (para.size() == 3) book.show_finance(para);
+                    }
+                    else book.show(para[1]);
+                    break;
+                case 11:
+                    is.open(para[1]);
+                    break;
                 default:
                     error();
                 }
@@ -89,12 +102,15 @@ namespace sjtu{
         void run() {
             std::string command;
 
+            std::ifstream is;
             while (true) {
                 std::cerr << user.username << '@';
-                std::getline(std::cin, command);
-                if (!runCommand(command))
+                if (is.is_open()) std::getline(is, command);
+                else std::getline(std::cin, command);
+                if (!runCommand(command, is))
                     return;
-                std::cerr << std::endl;             
+                std::cerr << std::endl;
+                if (is.is_open() && is.eof()) is.close();
             }
         }
     };

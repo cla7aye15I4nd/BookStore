@@ -10,7 +10,7 @@
 namespace sjtu{
     struct book{
         using string = std::string;
-    
+        
         string ISBN;
         string name;
         string author;
@@ -22,6 +22,16 @@ namespace sjtu{
         
         static const int BOOKSIZE = 200;
 
+        void print() {
+            std::cout << ISBN << '\t' << name << '\t' << author <<  '\t';
+            for (size_t i = 0; i < keyword.size(); ++i) {
+                std::cout << keyword[i];
+                if (i + 1 != keyword.size())
+                    std::cout << '|';
+            }
+            std::cout << '\t' << price / 100 << '.' << price % 100 << '\t' << count << "本" << std::endl;
+        }
+        
         void clear() {
             ISBN = "EMPTY";
             name = "EMPTY";
@@ -29,6 +39,7 @@ namespace sjtu{
             price = count = 0;
             keyword.clear();
         }
+        
         string combineName() const{ return name + ISBN; }
         string combineAuthor() const{ return author + ISBN; }
         string combineKeyword(int x) const{ return keyword[x] + ISBN; }
@@ -112,9 +123,10 @@ namespace sjtu{
                 for (auto e : para) {
                     if (check(e, "-ISBN=")) tmp.ISBN = e.substr(6, e.size() - 6);
                     else if (check(e, "-name=\"", false)) tmp.name = e.substr(7, e.size() - 8);
-                    else if (check(e, "-anthor=\"", false)) tmp.author = e.substr(9, e.size() - 10);
-                    else if (check(e, "-price=")) tmp.author = to_int(e.substr(7, e.size() - 7));
-                    else if (check(e, "-keyword=\"", false)) tmp.keyword = split(e.substr(10, e.size() - 11), '|');
+                    else if (check(e, "-author=\"", false)) tmp.author = e.substr(9, e.size() - 10);
+                    else if (check(e, "-price=")) tmp.price = to_int_100(e.substr(7, e.size() - 7));
+                    else if (check(e, "-keyword=\"", false))
+                        tmp.keyword = split(e.substr(10, e.size() - 11), '|');
                     else { error(); return; }
                 }
                 int idx = isbn.find(tmp.ISBN);
@@ -128,11 +140,43 @@ namespace sjtu{
             }
         }
 
-        void show(const string& para) {
-            // if (check(e, "-ISBN=")) 
-            // else if (check(e, "-name=")) 
-            // else if (check(e, "-anthor=")) tmp.author = e.substr(8, e.size() - 8);
-            // else if (check(e, "-price=")) tmp.author = to_int(e.substr(7, e.size() - 7));
+        void show() {
+            std::vector<int> list = isbn.find();
+            for (auto idx : list) {
+                book mybook = get(idx);
+                mybook.print();
+            }
+        }
+        
+        void show(const string& e) {
+            static string min = "0";
+            static string max = "99999999999999999999";
+            string p; std::vector<int> list;
+            
+            if (check(e, "-ISBN=")) {
+                p = e.substr(6, e.size() - 6);
+                list = isbn.find(p, p);
+            }else if (check(e, "-name=\"", false)) {
+                p = e.substr(7, e.size() - 8);
+                list = name.find(p + min, p + max);
+            }else if (check(e, "-author=\"", false)) {
+                p = e.substr(9, e.size() - 10);
+                list = author.find(p + min, p + max);
+            }else if (check(e, "-price=")) {
+                p = std::to_string(to_int_100(e.substr(7, e.size() - 7)));
+                list = price.find(p + min, p + max);
+            }
+            else if (check(e, "-keyword=\"", false)) {
+                p = e.substr(10, e.size() - 11);
+                list = keyword.find(p + min, p + max);
+                for (auto &idx : list)
+                    idx /= 100;
+            }else { error(); return; }
+
+            for (auto idx : list) {
+                book mybook = get(idx);
+                mybook.print();
+            }
         }
     
     private:
