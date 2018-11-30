@@ -45,7 +45,8 @@ public:
     void insert(node &u, int key) {
         if (u == nullptr) u = newnode(key);
         else {
-            int d = get(u->key) < get(key);
+            auto e = get(u->key);
+            int d = e < get(key);
             insert(u->ch[d], key);
             if (u->ch[d]->val > u->val)
                 rotate(u, d ^ 1);

@@ -34,9 +34,10 @@ namespace sjtu{
     
     parameter split(const string& str, char ch = ' ') {
         parameter retval;
-        size_t i, last;
+        size_t i, last; bool flag = true;
         for (i = 0, last = 0; i < str.size(); ++i) {
-            if (str[i] == ch) {
+            if (str[i] == '"') flag ^= 1;
+            if (str[i] == ch && flag) {
                 if (i - last > 0)
                     retval.push_back(str.substr(last, i - last));
                 last = i + 1;

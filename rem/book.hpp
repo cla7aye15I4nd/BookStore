@@ -17,8 +17,13 @@ namespace sjtu{
 
         long long price, count;
         std::vector<string> keyword;
-
+        
         book () { price = count = 0; }
+        void replace(char a, char b) {
+            for (auto &c: name)
+                if (c == a)
+                    c = b;
+        }
         
         static const int BOOKSIZE = 200;
 
@@ -42,16 +47,17 @@ namespace sjtu{
             keyword.clear();
         }
         
-        string combineName() const{ return name + ISBN; }
-        string combineAuthor() const{ return author + ISBN; }
-        string combineKeyword(int x) const{ return keyword[x] + ISBN; }
-        string combinePrice() const{ return std::to_string(price) + ISBN; }
+        string combineName() const{ return name + '_' + ISBN; }
+        string combineAuthor() const{ return author +  '_' + ISBN; }
+        string combineKeyword(int x) const{ return keyword[x] +  '_' + ISBN; }
+        string combinePrice() const{ return std::to_string(price) +  '_' + ISBN; }
 
         friend std::ostream& operator<< (std::ostream& os, const book& u) {
+            book v = u; v.replace(' ', '_');
             char outbuf[BOOKSIZE]; int last = 0;
             last = sprintf(outbuf, "%s %s %s %lld %lld %lu",
-                           u.ISBN.c_str(), u.name.c_str(), u.author.c_str(), u.price, u.count, u.keyword.size());
-            for (auto &s : u.keyword)
+                           v.ISBN.c_str(), v.name.c_str(), v.author.c_str(), v.price, v.count, v.keyword.size());
+            for (auto &s : v.keyword)
                 last += sprintf(outbuf + last, " %s", s.c_str());
             for (int i = last; i < BOOKSIZE - 1; ++i)
                 outbuf[i] = ' ';
@@ -66,6 +72,7 @@ namespace sjtu{
             u.keyword.resize(count);
             for (auto &s : u.keyword)
                 is >> s;
+            u.replace('_', ' ');
             return is;
         }
     };
@@ -151,8 +158,8 @@ namespace sjtu{
         }
         
         void show(const string& e) {
-            static string min = "0";
-            static string max = "99999999999999999999";
+            static string min = "_\0";
+            static string max = "_99999999999999999999";
             string p; std::vector<int> list;
             
             if (check(e, "-ISBN=")) {
