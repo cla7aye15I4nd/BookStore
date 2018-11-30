@@ -1,4 +1,0 @@
-logout
-su worker worker_password
-show -author="20"
-exit

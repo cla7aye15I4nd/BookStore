@@ -1,4 +1,0 @@
-logout
-su worker worker_password
-show -keyword="59"
-exit

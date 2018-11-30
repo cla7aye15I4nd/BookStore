@@ -1,5 +1,0 @@
-su worker worker_password
-select 9787544287722
-modify -name="芒果街，我自己的小屋" -keyword="文学|随笔" -author="桑德拉·希斯内罗丝" -price=45.00
-exit
-
