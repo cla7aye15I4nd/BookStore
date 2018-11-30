@@ -5,11 +5,20 @@
 #include <vector>
 #include <sstream>
 #include <cmath>
+#include <iostream>
 
 namespace sjtu{
     using string = std::string;
     using parameter = std::vector<string>;
 
+    void format_print(int x) {
+        std::cout << x / 100 << '.';
+        x %= 100;
+        if (x == 0) std::cout << "00";
+        else if (x <= 9) std::cout << "0" << x;
+        else std::cout << x;
+    }
+    
     int to_int(const string& str) {
         std::istringstream os(str);
    	double value; os >> value;

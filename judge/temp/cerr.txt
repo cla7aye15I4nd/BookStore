@@ -1,5 +1,0 @@
-root@root@root@root@root@root@root@root@root@root@root@root@root@root@root@root@root@root@root@root@root@root@root@Segmentation fault (core dumped)
-root@Segmentation fault (core dumped)
-root@root@root@root@Segmentation fault (core dumped)
-root@Segmentation fault (core dumped)
-root@root@root@

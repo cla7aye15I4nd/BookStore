@@ -29,7 +29,9 @@ namespace sjtu{
                 if (i + 1 != keyword.size())
                     std::cout << '|';
             }
-            std::cout << '\t' << price / 100 << '.' << price % 100 << '\t' << count << "本" << std::endl;
+            std::cout << '\t';
+            format_print(price);
+            std::cout << '\t' << count << "本" << std::endl;
         }
         
         void clear() {

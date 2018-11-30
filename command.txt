@@ -1,28 +1,35 @@
-useradd worker0 worker0_password 3 丁谦清
+useradd worker worker_password 3 林旭
 logout
-su worker0 worker0_password
-useradd user0 user0_password 1 叶发
+su worker worker_password
+select 9787559609303
+modify -ISBN=9787559609304
+modify -name="周鸿祎自传"
+modify -name="颠覆者：周鸿祎自传"
+select 9787559609304
+modify -keyword="人物|传记" -price=50 -author="周鸿祎"
+modify -price=49.8
+select 9787544287722
+modify -name="芒果街，我自己的小屋" -keyword="文学|随笔" -author="桑德拉·希斯内罗丝" -price=45.00
 logout
-register user1 user1_password 韩青
-su user0 user0_password
+register user user_password 谭进
+su user user_password
+show -ISBN=9787559609303
+show -ISBN=9787559609304
+show -name="颠覆者：周鸿自传"
+show -name="颠覆者：周鸿祎自传"
+show -author="周鸿祎"
 logout
-su user1 user1_password
-logout
-su root sjtu
-useradd worker1 worker1_password 3 林娟
-useradd user2 user2_password 1 常君莲
-logout
-register user3 user3_password 郭涛心
-su user2 user2_password
-logout
-su user3 user3_password
-logout
-su worker1 worker1_password
-useradd user4 user4_password 1 姜启
-logout
-register user5 user5_password 蒋爱枝
-su user4 user4_password
-logout
-su user5 user5_password
+su worker worker_password
+select 9787559410443
+modify -name="内陆岛屿" -keyword="文学|小说" -author="宋阿曼" -price=38
+import 5 50
+select 9787559609304
+import 10 100
+select 9787544287722
+import 15 150
+show -name="番茄屋"
+show -name="颠覆者：周鸿祎自传"
+show -keyword="文学"
+show
 logout
 exit

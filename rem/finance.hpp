@@ -1,6 +1,7 @@
 #ifndef FINANCE_HPP
 #define FINANCE_HPP
 
+#include <algorithm>
 namespace sjtu{
     using i64 = long long;
     void print(i64 x, FILE *fp) {

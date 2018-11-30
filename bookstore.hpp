@@ -8,17 +8,10 @@
 #include "rem/user.hpp"
 #include "rem/book.hpp"
 #include "rem/finance.hpp"
+
 #include <map>
 
 namespace sjtu{
-    void format_print(int x) {
-        std::cout << x / 100 << '.';
-        x %= 100;
-        if (x == 0) std::cout << "00";
-        else if (x <= 9) std::cout << "0" << x;
-        else std::cout << x;
-    }
-    
     static std::map<std::string, int> cmd = {
         {"exit", -1},
         {"su", 0},
