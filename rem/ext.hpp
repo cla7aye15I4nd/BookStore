@@ -26,11 +26,13 @@ namespace sjtu{
         size_t i, last;
         for (i = 0, last = 0; i < str.size(); ++i) {
             if (str[i] == ch) {
-                retval.push_back(str.substr(last, i - last));
+                if (i - last > 0)
+                    retval.push_back(str.substr(last, i - last));
                 last = i + 1;
             }
         }
-        retval.push_back(str.substr(last, i - last));
+        if (i - last > 0)
+            retval.push_back(str.substr(last, i - last));
         return retval;
     }
 

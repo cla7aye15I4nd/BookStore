@@ -179,19 +179,28 @@ namespace sjtu{
             }
         }
 
-        void import(int quantity, int cost_price) {
+        void import(int quantity, int cost_price, auto& sys) {
             if (id == -1) error();
             erase(bk, id);
             bk.count += quantity;
+            sys.append(cost_price);
             id = insert(bk);
         }
 
-        void buy(string _isbn, int quantity) {
-            if (id == -1) error();
-            book mybook = get(isbn.find(_isbn));
-            erase(mybook, id);
-            mybook.count += quantity;
-            id = insert(mybook);
+        void buy(string _isbn, int quantity, auto &sys) {
+            int idx = isbn.find(_isbn);
+            if (idx == -1) error();
+            else {
+                book mybook = get(idx);
+                erase(mybook, idx);
+                if (mybook.count < quantity)
+                    error();
+                else {
+                    mybook.count -= quantity;
+                    sys.append(quantity * mybook.price);
+                    insert(mybook);
+                }
+            }
         }
     
     private:

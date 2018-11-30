@@ -11,8 +11,8 @@ select 9787544287722
 import 15 150
 logout
 register user0 user0_password 谭进
-su user0 user0_password 
-buy 9787559410443 5 
+su user0 user0_password
+buy 9787559410443 5
 buy 9787544287722 3
 logout
 su worker worker_password 

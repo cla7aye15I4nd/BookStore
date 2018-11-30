@@ -7,7 +7,7 @@
 #include "rem/SHA256.hpp"
 #include "rem/user.hpp"
 #include "rem/book.hpp"
-
+#include "rem/finance.hpp"
 #include <map>
 
 namespace sjtu{
@@ -31,9 +31,13 @@ namespace sjtu{
     private:
         userSystem user;
         bookSystem book;
-
+        costSystem in, out;
+        
     public:
-        bookstore () {}
+        bookstore () {
+            in.init("in");
+            out.init("out");
+        }
 
         bool runCommand(const string& command, std::ifstream &is) {
             parameter para = split(command);
@@ -82,7 +86,7 @@ namespace sjtu{
                 case 8:
                     if (para.size() != 3 || user.level() < 3) error();
                     else {
-                        book.import(to_int(para[1]), to_int_100(para[2]));
+                        book.import(to_int(para[1]), to_int_100(para[2]), out);
                     }
                     break;
                 case 9:
@@ -90,13 +94,18 @@ namespace sjtu{
                     else if (para.size() == 1) book.show();
                     else if (para[1] == "finance") {
                         if (para.size() > 3) error();
-                        //if (para.size() == 3) book.show_finance(para);
+                        if (para.size() == 2) {
+                            std::cout << "+ " << in.find(-1) << "- " << out.find(-1) << std::endl;
+                        }
                     }
                     else book.show(para[1]);
                     break;
                 case 10:
                     if (user.level() < 1 || para.size() != 3) error();
-                    else book.buy(para[1], to_int(para[2]));
+                    else {
+                        book.buy(para[1], to_int(para[2]), in);
+                    }
+                    break;
                 case 11:
                     is.open(para[1]);
                     break;
