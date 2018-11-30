@@ -70,22 +70,22 @@ public:
         if (u == nullptr) return -1;
         auto e = get(u->key);
         if (e == key) return u->key;
-        return find(u -> ch[e > key], key);
+        return find(u -> ch[key > e], key);
     }
     
     void set(const std::string &file, auto _get) {
         get = _get;
         std::ifstream is(file);
+        int x;
         if (is.is_open()) {
             top = readint(is) + memory_pool;
             for (node ptr = memory_pool; ptr != top; ++ptr) {
-                int x;
-
                 x = readint(is); ptr->ch[0] = x != -1? x + memory_pool: nullptr;
                 x = readint(is); ptr->ch[1] = x != -1? x + memory_pool: nullptr;
                 is >> ptr->val >> ptr->key;
             }
-            root = readint(is) + memory_pool;
+            x = readint(is);
+            root = x != -1? x + memory_pool: nullptr;
             is.close();
         }
         os.open(file);
@@ -124,7 +124,7 @@ public:
                << ptr->val << ' '
                << ptr->key << std::endl;
         }
-        os << root - memory_pool;
+        os << (root ? root - memory_pool: -1);
         os.close();
         delete [] memory_pool;
     }

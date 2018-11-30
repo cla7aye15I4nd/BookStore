@@ -80,7 +80,7 @@ namespace sjtu{
                     }
                     break;
                 case 8:
-                    if (para.size() != 3) error();
+                    if (para.size() != 3 || user.level() < 3) error();
                     else {
                         book.import(to_int(para[1]), to_int_100(para[2]));
                     }
@@ -94,6 +94,9 @@ namespace sjtu{
                     }
                     else book.show(para[1]);
                     break;
+                case 10:
+                    if (user.level() < 1 || para.size() != 3) error();
+                    else book.buy(para[1], to_int(para[2]));
                 case 11:
                     is.open(para[1]);
                     break;
