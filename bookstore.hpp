@@ -140,6 +140,8 @@ namespace sjtu{
             std::string command;
 
             std::ifstream is;
+
+            is.open("command.txt");
             while (true) {
                 std::cerr << user.username << '@';
                 if (is.is_open()) std::getline(is, command);

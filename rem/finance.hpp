@@ -66,10 +66,11 @@ namespace sjtu{
                 create(file + ".data.bin");
                 base = fopen((file + ".base.bin").c_str(), "r+");
                 data = fopen((file + ".data.bin").c_str(), "r+");
-                print(0, base);
-                print(0, base);
+                print(0LL, base);
+                print(0LL, base);
             }
-            
+
+            rewind(base);
             size = input(base);
             sum.resize(size / BLOCKSIZE + 1);
             for (auto &v : sum)
