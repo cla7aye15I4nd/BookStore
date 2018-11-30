@@ -37,7 +37,9 @@ for i in range(6):
     print('case '+str(i+1)+': '+str(k)+"\t-\033[1;32mACCEPT\033[0m-  time:"+str(round(time.time()-nw,3))+'s')
 
 import sys
+import time
 
+time.sleep(5)
 for i in range(6,8):
     nw = time.time()
     k = test_name[i]
