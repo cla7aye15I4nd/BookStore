@@ -79,6 +79,12 @@ namespace sjtu{
                         book.modify(para);
                     }
                     break;
+                case 8:
+                    if (para.size() != 3) error();
+                    else {
+                        book.import(to_int(para[1]), to_int_100(para[2]));
+                    }
+                    break;
                 case 9:
                     if (user.level() < 1) error();
                     else if (para.size() == 1) book.show();

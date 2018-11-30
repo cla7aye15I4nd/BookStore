@@ -183,15 +183,15 @@ namespace sjtu{
             if (id == -1) error();
             erase(bk, id);
             bk.count += quantity;
-            insert(bk);
+            id = insert(bk);
         }
 
         void buy(string _isbn, int quantity) {
             if (id == -1) error();
-            book mybook = isbn.find(_isbn);
+            book mybook = get(isbn.find(_isbn));
             erase(mybook, id);
             mybook.count += quantity;
-            insert(mybook);
+            id = insert(mybook);
         }
     
     private:
