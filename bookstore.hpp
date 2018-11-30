@@ -11,6 +11,14 @@
 #include <map>
 
 namespace sjtu{
+    void format_print(int x) {
+        std::cout << x / 100 << '.';
+        x %= 100;
+        if (x == 0) std::cout << "00";
+        else if (x <= 9) std::cout << "0" << x;
+        else std::cout << x;
+    }
+    
     static std::map<std::string, int> cmd = {
         {"exit", -1},
         {"su", 0},
@@ -86,7 +94,7 @@ namespace sjtu{
                 case 8:
                     if (para.size() != 3 || user.level() < 3) error();
                     else {
-                        book.import(to_int(para[1]), to_int_100(para[2]), out);
+                        book.import(to_int(para[1]), to_int_100(para[2]), in, out);
                     }
                     break;
                 case 9:
@@ -95,7 +103,18 @@ namespace sjtu{
                     else if (para[1] == "finance") {
                         if (para.size() > 3) error();
                         if (para.size() == 2) {
-                            std::cout << "+ " << in.find(-1) << "- " << out.find(-1) << std::endl;
+                            std::cout << "+ ";
+                            format_print(in.find(-1));
+                            std::cout << " - ";
+                            format_print(out.find(-1));
+                            std::cout << std::endl;
+                        } else {
+                            int t = to_int(para[2]);
+                            std::cout << "+ ";
+                            format_print(in.find(t));
+                            std::cout << " - ";
+                            format_print(out.find(t));
+                            std::cout << std::endl;
                         }
                     }
                     else book.show(para[1]);
@@ -103,7 +122,7 @@ namespace sjtu{
                 case 10:
                     if (user.level() < 1 || para.size() != 3) error();
                     else {
-                        book.buy(para[1], to_int(para[2]), in);
+                        book.buy(para[1], to_int(para[2]), in, out);
                     }
                     break;
                 case 11:

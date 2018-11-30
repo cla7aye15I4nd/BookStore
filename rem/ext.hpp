@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <cmath>
 
 namespace sjtu{
     using string = std::string;
@@ -18,7 +19,8 @@ namespace sjtu{
     int to_int_100(const string& str) {
         std::istringstream os(str);
    	double value; os >> value;
-        return value * 100;
+        fprintf(stderr, "%.3f %d\n", value, int(value * 100)); 
+        return round(value * 100);
     }
     
     parameter split(const string& str, char ch = ' ') {
