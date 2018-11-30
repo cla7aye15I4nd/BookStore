@@ -106,7 +106,7 @@ namespace sjtu{
             for (size_t i = 0; i < bk.keyword.size(); ++i)
                 keyword.erase(id * 100 + i);
         }
-
+        
         int insert(book bk) {
             int d = append(bk);
             isbn.insert(d);
@@ -141,7 +141,7 @@ namespace sjtu{
                 bk = tmp;
             }
         }
-
+        
         void show() {
             std::vector<int> list = isbn.find();
             for (auto idx : list) {
@@ -183,11 +183,13 @@ namespace sjtu{
 
         void import(int quantity, int cost_price, auto &in, auto& out) {
             if (id == -1) error();
-            erase(bk, id);
-            bk.count += quantity;
-            out.append(cost_price);
-            in.append(0);
-            id = insert(bk);
+            else {
+                erase(bk, id);
+                bk.count += quantity;
+                out.append(cost_price);
+                in.append(0);
+                id = insert(bk);
+            }
         }
 
         void buy(string _isbn, int quantity, auto &in, auto& out) {
@@ -195,10 +197,10 @@ namespace sjtu{
             if (idx == -1) error();
             else {
                 book mybook = get(idx);
-                erase(mybook, idx);
                 if (mybook.count < quantity)
                     error();
                 else {
+                    erase(mybook, idx);
                     mybook.count -= quantity;
                     out.append(0);
                     in.append(quantity * mybook.price);

@@ -28,7 +28,7 @@ namespace sjtu{
     int to_int_100(const string& str) {
         std::istringstream os(str);
    	double value; os >> value;
-        fprintf(stderr, "%.3f %d\n", value, int(value * 100)); 
+        //fprintf(stderr, "%.3f %d\n", value, int(value * 100)); 
         return round(value * 100);
     }
     
