@@ -233,7 +233,7 @@ namespace sjtu {
                 }
             }
         }
-
+        
     private:
         Treap<std::string> isbn, name, author, keyword, price;
         int id;

@@ -5,13 +5,6 @@
 #include "SHA256.hpp"
 
 namespace sjtu{
-    const string INVALID = "Invalid";
-    const string GUEST   = "guest";
-    
-    void error() {
-        std::cout << INVALID << std::endl;
-    }
-    
     struct user_t{
         int level;
         string username;
@@ -99,6 +92,10 @@ namespace sjtu{
                 db.save(sha256sum(userid), aim);
             } else
                 error();
+        }
+
+        void addlog(const std::string& s) {
+            db.append(sha256sum(username), s);
         }
     };
 }

@@ -6,11 +6,20 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <stdexcept>
 
 namespace sjtu {
     using string = std::string;
     using parameter = std::vector<string>;
 
+    const string INVALID = "Invalid";
+    const string GUEST   = "guest";
+    
+    void error() {
+        std::cout << INVALID << std::endl;
+        throw std::invalid_argument("");
+    }
+    
     void format_print(int x) {
         std::cout << x / 100 << '.';
         x %= 100;

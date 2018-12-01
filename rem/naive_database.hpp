@@ -28,6 +28,12 @@ namespace sjtu{
             os.close();   
         }
 
+        void append(const string& key, const string& val) const{
+            std::fstream os(dir + key + ".log", std::ios::out | std::ios::app);
+            os << val << std::endl;
+            os.close();
+        }
+
         bool exist(const string& key) {
             std::ifstream os(dir + key + ".bin");
             return os.is_open();
