@@ -58,6 +58,7 @@ namespace sjtu{
         
     public:
         costSystem () = default;
+        i64 count() { return size; }
         void init (const std::string file) {
             base = fopen((file + ".base.bin").c_str(), "r+");
             data = fopen((file + ".data.bin").c_str(), "r+");
@@ -102,6 +103,10 @@ namespace sjtu{
                     ret += calc(i, l, r);
                 return ret;
             }
+        }
+
+        i64 getdata(int x) {
+            return calc(get_id(x), x, x);
         }
     };
 }

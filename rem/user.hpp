@@ -97,7 +97,7 @@ namespace sjtu{
         }
 
         void addlog(const string& s) {
-            db.append(sha256sum(username), s);
+            db.append(username, s);
         }
 
         void report(const string& name) {

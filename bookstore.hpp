@@ -27,6 +27,7 @@ namespace sjtu{
         {"buy", 10},
         {"load", 11},
         {"report", 12},
+        {"log", 13},
     };
     
     class bookstore{
@@ -132,6 +133,23 @@ namespace sjtu{
                         } else if (para[1] == "employee") {
                             if (user.level() >= 7) user.all();
                             else error();
+                        } else if (para[1] == "finance") {
+                            for (int i = 0; i < in.count(); ++i) {
+                                std::cout << " + "; format_print(in.getdata(i));
+                                std::cout << " - "; format_print(out.getdata(i));
+                                std::cout << std::endl;
+                            }
+                        } else error();
+                        break;
+                    case 13:
+                        if (user.level() < 7) error();
+                        else {
+                            user.all();
+                            for (int i = 0; i < in.count(); ++i) {
+                                std::cout << " + "; format_print(in.getdata(i));
+                                std::cout << " - "; format_print(out.getdata(i));
+                                std::cout << std::endl;
+                            }
                         }
                         break;
                     default:

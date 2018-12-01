@@ -36,11 +36,9 @@ namespace sjtu{
 
         void print(const string& name) {
             std::ifstream is(dir + name + ".log");
-            while (!is.eof()) {
-                string s;
-                std::getline(is, s);
-                std::cout << s;
-            }
+            string s;
+            while (std::getline(is, s)) 
+                std::cout << s << std::endl;
             is.close();
         }
 
