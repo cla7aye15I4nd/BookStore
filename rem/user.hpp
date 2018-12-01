@@ -121,8 +121,10 @@ namespace sjtu{
                 if(subFile == "." || subFile == "..")
                     continue;
                 auto vs = split(subFile, '.');
-                if (vs[1] == "log")
+                if (vs[1] == "log") {
                     report(vs[0]);
+                    std::cout << std::endl;
+                }
             }
             closedir(pDir);
         }

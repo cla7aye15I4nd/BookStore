@@ -145,6 +145,7 @@ namespace sjtu{
                         if (user.level() < 7) error();
                         else {
                             user.all();
+                            std::cout << std::endl;
                             for (int i = 0; i < in.count(); ++i) {
                                 std::cout << " + "; format_print(in.getdata(i));
                                 std::cout << " - "; format_print(out.getdata(i));
