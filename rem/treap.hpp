@@ -42,20 +42,21 @@ public:
         u = t;
     }
 
-    void insert(node &u, int key) {
-        if (u == nullptr) u = newnode(key);
+    void insert(node &u, const DataType& key, int key_id) {
+        if (u == nullptr) u = newnode(key_id);
         else {
             auto e = get(u->key);
-            int d = e < get(key);
-            insert(u->ch[d], key);
+            int d = e < key;
+            insert(u->ch[d], key, key_id);
             if (u->ch[d]->val > u->val)
                 rotate(u, d ^ 1);
         }
     }
 
-    void erase(node &u, int key) {
+    void erase(node &u, const DataType& key) {
         if (u == nullptr) return;
-        if (get(u->key) == get(key)) {
+        auto e = get(u->key);
+        if (e == key) {
             if (u->ch[0] == nullptr) u = u->ch[1];
             else if (u->ch[1] == nullptr) u = u->ch[0];
             else {
@@ -64,7 +65,7 @@ public:
                 erase(u->ch[d], key);
             }
         }else
-            erase(u->ch[get(u->key) < get(key)], key);
+            erase(u->ch[e < key], key);
     }
 
     int find(node u, const DataType &key) {
@@ -131,8 +132,8 @@ public:
     }
 
     int find(const DataType& key) { return find(root, key); }
-    void erase(int id) { erase(root, id); }
-    void insert(int id) { insert(root, id); }
+    void erase(int id) { erase(root, get(id)); }
+    void insert(int id) { insert(root, get(id), id); }
     std::vector<int> find(const DataType& left,
                           const DataType& right) {
         std::vector<int> vec;

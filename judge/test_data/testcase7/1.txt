@@ -1,0 +1,12 @@
+useradd worker worker_password 3 林旭
+logout
+su worker worker_password
+select 9787559609304
+modify -name="颠覆者：周鸿祎自传"
+modify -keyword="人物|传记" -price=50 -author="周鸿祎"
+modify -price=49.8
+select 9787544287722
+modify -name="芒果街，我自己的小屋" -keyword="文学|随笔" -author="桑德拉·希斯内罗丝" -price=45.00
+logout
+exit
+

@@ -1,0 +1,55 @@
+Always Challenge Miracles.
+useradd worker0 worker0_password 3 丁谦清
+useradd worker0 worker0_passworddd 3 清谦丁
+useradd root2 sjtu2 7 管理员
+useradd root sjtu 1 真实管理员
+passwd worker0 worker0_passworddd
+passwd root sjtuuu
+delete user0
+logout
+Always Cook Mushroom.
+useradd user_ user__password
+register user__ user___password
+logout
+delete user
+passwd root sjtu
+？？？
+su worker0 worker0_password
+su worker0 worker0_passworddd
+passwd worker0 worker0_password worker0_password
+useradd user0 user0_password 1 YEFA
+register user1 user1_password hanq qing
+delete user1
+logout
+su root sjtuuu
+delete worker0
+delete worker0
+delete user0
+useradd user0 user0_password 1 叶发
+logout
+su user0 user0_password
+passwd user1 user1_password user1_passworddd
+logout
+su user0 user0_password
+delete user0
+logout
+su root sjtuuu
+delete user0
+useradd worker1 worker1_password 3 林娟
+useradd user2 user2_password 1 常君莲
+register user3 user3_password 郭涛心
+logout
+su user2 user2_password
+logout
+su user3 user3_password
+logout
+su worker1 worker1_password
+useradd user4 user4_password 1 姜启
+register user5 user5_password 蒋爱枝
+logout
+su user4 user4_password
+logout
+su user5 user5_password
+logout
+Congratulations!
+exit
