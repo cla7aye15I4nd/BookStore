@@ -34,6 +34,16 @@ namespace sjtu{
             os.close();
         }
 
+        void print(const string& name) {
+            std::ifstream is(dir + name + ".log");
+            while (!is.eof()) {
+                string s;
+                std::getline(is, s);
+                std::cout << s;
+            }
+            is.close();
+        }
+
         bool exist(const string& key) {
             std::ifstream os(dir + key + ".bin");
             return os.is_open();

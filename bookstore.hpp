@@ -26,6 +26,7 @@ namespace sjtu{
         {"show", 9},
         {"buy", 10},
         {"load", 11},
+        {"report", 12},
     };
     
     class bookstore{
@@ -33,7 +34,6 @@ namespace sjtu{
         userSystem user;
         bookSystem book;
         costSystem in, out;
-        bool invalid;
         
     public:
         bookstore () {
@@ -124,13 +124,23 @@ namespace sjtu{
                     case 11:
                         is.open(para[1]);
                         break;
+                    case 12:
+                        if (para.size() == 1) error();
+                        else if (para[1] == "myself") {
+                            if (user.level() >= 3) user.report();
+                            else error();
+                        } else if (para[1] == "employee") {
+                            if (user.level() >= 7) user.all();
+                            else error();
+                        }
+                        break;
                     default:
                         error();
                     }
                 }
             } catch (...) { flag = false; }
 
-            if (flag) 
+            if (flag && user.level() >= 3) 
                 user.addlog(command);
 
             return true;

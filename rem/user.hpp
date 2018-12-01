@@ -2,6 +2,8 @@
 #define USER_HPP
 
 #include <iostream>
+#include <sys/stat.h>
+#include <dirent.h>
 #include "SHA256.hpp"
 
 namespace sjtu{
@@ -94,8 +96,35 @@ namespace sjtu{
                 error();
         }
 
-        void addlog(const std::string& s) {
+        void addlog(const string& s) {
             db.append(sha256sum(username), s);
+        }
+
+        void report(const string& name) {
+            std::cout << "username : " << name << std::endl;
+            db.print(name);
+        }
+
+        void report() { report(username); }
+        void all() {
+            string path = "user/";
+            DIR* pDir;
+            struct dirent* ptr;
+
+            struct stat s;
+            lstat(path.c_str(), &s);
+            
+            string subFile;
+            pDir = opendir(path.c_str());
+            while((ptr = readdir(pDir)) != 0){
+                subFile = ptr -> d_name;
+                if(subFile == "." || subFile == "..")
+                    continue;
+                auto vs = split(subFile, '.');
+                if (vs[1] == "log")
+                    report(vs[0]);
+            }
+            closedir(pDir);
         }
     };
 }
