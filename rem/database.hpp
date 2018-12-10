@@ -12,6 +12,11 @@ public:
         os << data;
         return os.tellp() / size - 1;
     }
+    int cover(const DataType &data, int id) {
+        os.seekg(id * size, std::ios::beg);
+        os << data;
+        return os.tellp() / size - 1;
+    }
     DataType get(int id) {
         os.seekg(id * size, std::ios::beg);
         DataType data;

@@ -38,7 +38,7 @@ for i in range(6):
 
 import sys
 
-for i in range(6,8):
+for i in range(6,9):
     nw = time.time()
     k = test_name[i]
     loc = test_loc[i]

@@ -119,6 +119,17 @@ namespace sjtu {
                 keyword.erase(id * 100 + i);
         }
 
+        int insert(book bk, int d) {
+            cover(bk, d);
+            isbn.insert(d);
+            name.insert(d);
+            author.insert(d);
+            price.insert(d);
+            for (size_t i = 0; i < bk.keyword.size(); ++i)
+                keyword.insert(d * 100 + i);
+            return d;
+        }
+
         int insert(book bk) {
             int d = append(bk);
             isbn.insert(d);
@@ -130,6 +141,7 @@ namespace sjtu {
             return d;
         }
 
+        
         void modify(parameter para) {
             if (id == -1)
                 error();
@@ -157,7 +169,7 @@ namespace sjtu {
                     return;
                 }
                 erase(bk, id);
-                id = insert(tmp);
+                id = insert(tmp, id);
                 bk = tmp;
             }
         }
