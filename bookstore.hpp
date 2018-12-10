@@ -172,12 +172,16 @@ namespace sjtu{
 
             is.open("command.txt");
             while (true) {
+#ifdef USER
                 std::cerr << user.username << '@';
+#endif
                 if (is.is_open()) std::getline(is, command);
                 else std::getline(std::cin, command);
                 if (!runCommand(command, is))
                     return;
+#ifdef USER
                 std::cerr << std::endl;
+#endif
                 if (is.is_open() && is.eof()) is.close();
             }
         }
