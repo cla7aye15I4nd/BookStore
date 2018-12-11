@@ -136,6 +136,7 @@ namespace sjtu {
             name.insert(d);
             author.insert(d);
             price.insert(d);
+            
             for (size_t i = 0; i < bk.keyword.size(); ++i)
                 keyword.insert(d * 100 + i);
             return d;

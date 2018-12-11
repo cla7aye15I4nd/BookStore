@@ -12,10 +12,9 @@ public:
         os << data;
         return os.tellp() / size - 1;
     }
-    int cover(const DataType &data, int id) {
+    void cover(const DataType &data, int id) {
         os.seekg(id * size, std::ios::beg);
         os << data;
-        return os.tellp() / size - 1;
     }
     DataType get(int id) {
         os.seekg(id * size, std::ios::beg);
@@ -25,17 +24,19 @@ public:
     }
 
     DataBase() {}
-    DataBase(const std::string &file) {
-        os.open(file, std::ios::in | std::ios::out);
+    DataBase(const std::string &_file) {
+        file = _file;
+        os.open(file);
         if (!os.is_open()) {
             os.open(file, std::ios::out);
             os.close();
-            os.open(file, std::ios::in | std::ios::out);
+            os.open(file);
         }
     }
     virtual ~DataBase() { os.close(); }
 
 private:
+    std::string file;
     std::fstream os;
 };
 

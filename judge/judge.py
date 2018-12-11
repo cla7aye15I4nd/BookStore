@@ -54,12 +54,13 @@ for i in range(6,9):
     if result != 0:
         print('case '+str(i+1)+' failed')
         os.system('rm -r '+temp_dir)
-        continue
-    print('case '+str(i+1)+': '+str(k)+"\t-\033[1;32mACCEPT\033[0m-  time:"+str(round(time.time()-nw,3))+'s')
-    os.system('rm '+temp_dir+'/bookstore')
-    os.system('rm '+temp_dir+'/command.txt')
-    if i == 7:
-        sys.stdout.write("\tdatabase size: ")
-        sys.stdout.flush()
-        os.system('du -h --max-depth=1 temp')
-    os.system('rm -r '+temp_dir)
+        print("time:"+str(round(time.time()-nw,3))+'s')
+    else:
+        print('case '+str(i+1)+': '+str(k)+"\t-\033[1;32mACCEPT\033[0m-  time:"+str(round(time.time()-nw,3))+'s')
+        os.system('rm '+temp_dir+'/bookstore')
+        os.system('rm '+temp_dir+'/command.txt')
+        if i >= 7:
+            sys.stdout.write("\tdatabase size: ")
+            sys.stdout.flush()
+            os.system('du -h --max-depth=1 temp')
+        os.system('rm -r '+temp_dir)

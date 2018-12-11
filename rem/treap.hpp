@@ -11,145 +11,158 @@
 template<typename DataType>
 class Treap{
 public:
-    static const int MEMORY_SIZE = 5000000;
-    
     std::default_random_engine randint;
-    static int readint(std::istream& os) {
-        int x;
-        os >> x;
-        return x;
-    }
     
     struct Node{
-        Node *ch[2];
+        int ch[2];
         int val;
         int key;
     };
 
-    using node = Node*;
+    static const size_t node_size = sizeof(Node);
+
+    using node = int;
     
     node newnode(int key) {
-        top->ch[0] = top->ch[1] = nullptr;
-        top->key = key;
-        top->val = randint();
-        return top++;
+        int id;
+        if (bin.empty()) {
+            id = end;
+            os.seekp(id * node_size);
+            Node tmp = {-1, -1, (int) randint(), key};
+            os.write(reinterpret_cast<char*>(&tmp), node_size);
+            end++;
+        } else {
+            id = bin.back();
+            bin.pop_back();
+            os.seekp(id * node_size);
+            Node tmp = {-1, -1, (int) randint(), key};
+            os.write(reinterpret_cast<char*>(&tmp), node_size);
+        }
+        
+        return id;
     }
     
-    void rotate(node &u, int d) {
-        node t = u->ch[d ^ 1];
-        u->ch[d ^ 1] = t->ch[d];
-        t->ch[d] = u;
-        u = t;
+    void write(int id, int pos, int val) {
+        //std::cerr << id << ' ' << pos << ' ' << val << '\n';
+        os.seekp(id * node_size + pos * sizeof(int));
+        os.write(reinterpret_cast<char*>(&val), sizeof(int));
     }
-
-    void insert(node &u, const DataType& key, int key_id) {
-        if (u == nullptr) u = newnode(key_id);
-        else {
-            auto e = get(u->key);
+    
+    int read(int id, int pos) {
+        int val;
+        os.seekp(id * node_size + pos * sizeof(int));
+        os.read(reinterpret_cast<char*>(&val), sizeof(int));
+        return val;
+    }
+    
+    void rotate(int id, int pos, int d) {
+        node u = read(id, pos);
+        node t = read(u, d ^ 1);
+        write(u, d ^ 1, read(t, d));
+        write(t, d, u);
+        write(id, pos, t);
+    }
+    
+    void insert(int id, int pos, const DataType& key, int key_id) {
+        node u = read(id, pos);
+        if (u == -1) {
+            u = newnode(key_id);
+            write(id, pos, u);
+        }else {
+            auto e = get(read(u, 3));
             int d = e < key;
-            insert(u->ch[d], key, key_id);
-            if (u->ch[d]->val > u->val)
-                rotate(u, d ^ 1);
+            insert(u, d, key, key_id);
+            if (read(read(u, d), 2) > read(u, 2))
+                rotate(id, pos, d ^ 1);
         }
     }
-
-    void erase(node &u, const DataType& key) {
-        if (u == nullptr) return;
-        auto e = get(u->key);
+    
+    void erase(int id, int pos, const DataType& key) {
+        node u = read(id, pos);
+        if (u == -1) return;
+        auto e = get(read(u, 3));
         if (e == key) {
-            if (u->ch[0] == nullptr) u = u->ch[1];
-            else if (u->ch[1] == nullptr) u = u->ch[0];
-            else {
-                int d = u->ch[0]->val > u->ch[1]->val;
-                rotate(u, d);
-                erase(u->ch[d], key);
+            if (read(u, 0) == -1) {
+                bin.push_back(u);
+                write(id, pos, read(u, 1));
+            }else if (read(u, 1) == -1)  {
+                bin.push_back(u);
+                write(id, pos, read(u, 0));
+            }else {
+                int d = read(read(u, 0), 2) > read(read(u, 1), 2);
+                rotate(id, pos, d);
+                u = read(id, pos);
+                erase(u, d, key);
             }
         }else
-            erase(u->ch[e < key], key);
+            erase(u, e < key, key);
     }
-
+    
     int find(node u, const DataType &key) {
-        if (u == nullptr) return -1;
-        auto e = get(u->key);
-        if (e == key) return u->key;
-        return find(u -> ch[key > e], key);
+        if (u == -1) return -1;
+        int id = read(u, 3);
+        auto e = get(id);
+        if (e == key) return id;
+        return find(read(u, key > e), key);
     }
     
     void set(const std::string &file, auto _get) {
         get = _get;
-        std::ifstream is(file);
-        int x;
-        if (is.is_open()) {
-            top = readint(is) + memory_pool;
-            for (node ptr = memory_pool; ptr != top; ++ptr) {
-                x = readint(is); ptr->ch[0] = x != -1? x + memory_pool: nullptr;
-                x = readint(is); ptr->ch[1] = x != -1? x + memory_pool: nullptr;
-                is >> ptr->val >> ptr->key;
-            }
-            x = readint(is);
-            root = x != -1? x + memory_pool: nullptr;
-            is.close();
-        }
         os.open(file);
+        if (!os.is_open()) {
+            os.open(file, std::ios::out);
+            os.close();os.open(file);
+            for (int i = 0, x = -1; i < 4; ++i) {
+                os.write(reinterpret_cast<char*>(&x), sizeof(int));
+            }
+        }
+        os.seekp(0, std::ios::end);
+        end = os.tellp() / node_size;
     }
 
     void find(node u, const DataType& left, const DataType& right, std::vector<int> &vec) {
-        if (u == nullptr) return;
-        DataType e = get(u->key);
-        if (e < left) find (u->ch[1], left, right, vec);
-        else if (e > right) find (u->ch[0], left, right, vec);
+        if (u == -1) return;
+        DataType e = get(read(u, 3));
+        if (e < left) find(read(u, 1), left, right, vec);
+        else if (e > right) find (read(u, 0), left, right, vec);
         else {
-            find (u->ch[0], left, right, vec);
-            vec.push_back(u->key);
-            find (u->ch[1], left, right, vec);
+            find (read(u, 0), left, right, vec);
+            vec.push_back(read(u, 3));
+            find (read(u, 1), left, right, vec);
         }
     }
 
     void find(node u, std::vector<int> &vec) {
-        if (u == nullptr) return;
-        find (u->ch[0], vec);
-        vec.push_back(u->key);
-        find (u->ch[1], vec);
+        if (u == -1) return;
+        find (read(u, 0), vec);
+        vec.push_back(read(u, 3));
+        find (read(u, 1), vec);
     }
     
-    Treap () {
-        memory_pool = new Node [MEMORY_SIZE];
-        top = memory_pool;
-        root = nullptr;
-    }
+    Treap () {}
     
-    virtual ~Treap () {
-        os << top - memory_pool << std::endl;
-        for (node ptr = memory_pool; ptr != top; ++ptr) {
-            os << (ptr->ch[0] ? ptr->ch[0] - memory_pool: -1) << ' '
-               << (ptr->ch[1] ? ptr->ch[1] - memory_pool: -1) << ' '
-               << ptr->val << ' '
-               << ptr->key << std::endl;
-        }
-        os << (root ? root - memory_pool: -1);
-        os.close();
-        delete [] memory_pool;
-    }
+    virtual ~Treap () { os.close(); }
 
-    int find(const DataType& key) { return find(root, key); }
-    void erase(int id) { erase(root, get(id)); }
-    void insert(int id) { insert(root, get(id), id); }
+    int find(const DataType& key) { return find(read(0, 0), key); }
+    void erase(int id) { erase(0, 0, get(id)); }
+    void insert(int id) { insert(0, 0, get(id), id); }
     std::vector<int> find(const DataType& left,
                           const DataType& right) {
         std::vector<int> vec;
-        find(root, left, right, vec);
+        find(read(0, 0), left, right, vec);
         return vec;
     }
     std::vector<int> find() {
         std::vector<int> vec;
-        find(root,  vec);
+        find(read(0, 0),  vec);
         return vec;
     }
     
 private:
-    node memory_pool, top, root;
-    std::ofstream os;
+    std::vector<node> bin;
+    std::fstream os;
     std::function<DataType(int)> get;
+    int end;
 };
 
 #endif
