@@ -1,13 +1,13 @@
 #ifndef BOOKSTORE_HPP
 #define BOOKSTORE_HPP
 
-#include "rem/ext.hpp"
-#include "rem/naive_database.hpp"
-#include "rem/database.hpp"
-#include "rem/SHA256.hpp"
-#include "rem/user.hpp"
-#include "rem/book.hpp"
-#include "rem/finance.hpp"
+#include "ext.hpp"
+#include "naive_database.hpp"
+#include "database.hpp"
+#include "SHA256.hpp"
+#include "user.hpp"
+#include "book.hpp"
+#include "finance.hpp"
 
 #include <map>
 
