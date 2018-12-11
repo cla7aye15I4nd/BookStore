@@ -43,7 +43,6 @@ public:
     }
     
     void write(int id, int pos, int val) {
-        //std::cerr << id << ' ' << pos << ' ' << val << '\n';
         os.seekp(id * node_size + pos * sizeof(int));
         os.write(reinterpret_cast<char*>(&val), sizeof(int));
     }
@@ -121,22 +120,30 @@ public:
     }
 
     void find(node u, const DataType& left, const DataType& right, std::vector<int> &vec) {
+        Node t;
         if (u == -1) return;
-        DataType e = get(read(u, 3));
-        if (e < left) find(read(u, 1), left, right, vec);
-        else if (e > right) find (read(u, 0), left, right, vec);
+
+        os.seekp(u * node_size);
+        os.read(reinterpret_cast<char*>(&t), node_size);
+        DataType e = get(t.key);
+        if (e < left) find(t.ch[1], left, right, vec);
+        else if (e > right) find (t.ch[0], left, right, vec);
         else {
-            find (read(u, 0), left, right, vec);
-            vec.push_back(read(u, 3));
-            find (read(u, 1), left, right, vec);
+            find (t.ch[0], left, right, vec);
+            vec.push_back(t.key);
+            find (t.ch[1], left, right, vec);
         }
     }
-
+    
     void find(node u, std::vector<int> &vec) {
         if (u == -1) return;
-        find (read(u, 0), vec);
-        vec.push_back(read(u, 3));
-        find (read(u, 1), vec);
+        Node t;
+        os.seekp(u * node_size);
+        os.read(reinterpret_cast<char*>(&t), node_size);
+
+        find (t.ch[0], vec);
+        vec.push_back(t.key);
+        find (t.ch[1], vec);
     }
     
     Treap () {}
