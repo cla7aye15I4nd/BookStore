@@ -25,7 +25,7 @@ namespace sjtu {
                     c = b;
         }
 
-        static const int BOOKSIZE = 100;
+        static const int BOOKSIZE = 150;
 
         void print() {
             std::cout << ISBN << '\t' << name << '\t' << author << '\t';
