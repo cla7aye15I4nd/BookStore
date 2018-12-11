@@ -4,6 +4,7 @@
 user/*
 *~
 bookstore
+judge/test_data/testcase9
 judge/boostore
 code
 tmp
