@@ -55,20 +55,20 @@ public:
     }
     
     void rotate(int id, int pos, int d) {
-        node u = read(id, pos);
-        node t = read(u, d ^ 1);
+        node &&u = read(id, pos);
+        node &&t = read(u, d ^ 1);
         write(u, d ^ 1, read(t, d));
         write(t, d, u);
         write(id, pos, t);
     }
     
     void insert(int id, int pos, const DataType& key, int key_id) {
-        node u = read(id, pos);
+        node &&u = read(id, pos);
         if (u == -1) {
             u = newnode(key_id);
             write(id, pos, u);
         }else {
-            auto e = get(read(u, 3));
+            auto &&e = get(read(u, 3));
             int d = e < key;
             insert(u, d, key, key_id);
             if (read(read(u, d), 2) > read(u, 2))
@@ -77,9 +77,9 @@ public:
     }
     
     void erase(int id, int pos, const DataType& key) {
-        node u = read(id, pos);
+        node &&u = read(id, pos);
         if (u == -1) return;
-        auto e = get(read(u, 3));
+        auto &&e = get(read(u, 3));
         if (e == key) {
             if (read(u, 0) == -1) {
                 bin.push_back(u);
@@ -99,8 +99,8 @@ public:
     
     int find(node u, const DataType &key) {
         if (u == -1) return -1;
-        int id = read(u, 3);
-        auto e = get(id);
+        int &&id = read(u, 3);
+        auto &&e = get(id);
         if (e == key) return id;
         return find(read(u, key > e), key);
     }
@@ -125,7 +125,7 @@ public:
 
         os.seekp(u * node_size);
         os.read(reinterpret_cast<char*>(&t), node_size);
-        DataType e = get(t.key);
+        auto &&e = get(t.key);
         if (e < left) find(t.ch[1], left, right, vec);
         else if (e > right) find (t.ch[0], left, right, vec);
         else {
