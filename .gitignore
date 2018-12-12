@@ -6,6 +6,7 @@ user/*
 bookstore
 judge/test_data/testcase9
 judge/boostore
+judge/temp
 code
 tmp
 command.txt
