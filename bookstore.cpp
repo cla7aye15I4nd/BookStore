@@ -2,6 +2,6 @@
 sjtu::bookstore bookstore;
 
 int main() {
-    bookstore.run();
-    return 0;
+  bookstore.run();
+  return 0;
 }
