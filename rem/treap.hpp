@@ -166,10 +166,10 @@ public:
     }
     
 private:
-    std::vector<node> bin;
-    std::fstream os;
-    std::function<DataType(int)> get;
     int end;
+    std::fstream os;
+    std::vector<node> bin;
+    std::function<DataType(int)> get;
 };
 
 #endif
