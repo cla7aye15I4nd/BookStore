@@ -20,7 +20,7 @@ public:
         os.seekg(id * size, std::ios::beg);
         os << data;
     }
-    DataType get(int id) {
+    const DataType& get(int id) {
         if (map.count(id))
             return map[id];
         else {

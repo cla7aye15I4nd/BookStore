@@ -168,7 +168,7 @@ public:
 private:
     std::vector<node> bin;
     std::fstream os;
-    std::function<DataType(int)> get;
+    std::function<const DataType&(int)> get;
     int end;
 };
 
