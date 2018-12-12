@@ -3,6 +3,7 @@
 
 #include "database.hpp"
 #include "treap.hpp"
+#include "ext.hpp"
 #include <cstdio>
 #include <string>
 #include <vector>

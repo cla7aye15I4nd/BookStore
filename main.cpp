@@ -1,4 +1,4 @@
-#include "rem/bookstore.hpp"
+#include "rem/bookstore.h"
 sjtu::bookstore bookstore;
 
 int main() {
