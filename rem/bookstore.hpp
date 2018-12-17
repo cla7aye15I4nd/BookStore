@@ -16,7 +16,7 @@ static std::map<std::string, int> cmd = {
     {"exit", -1},    {"su", 0},      {"logout", 1}, {"useradd", 2},
     {"register", 3}, {"delete", 4},  {"passwd", 5}, {"select", 6},
     {"modify", 7},   {"import", 8},  {"show", 9},   {"buy", 10},
-    {"load", 11},    {"report", 12}, {"log", 13},
+    {"load", 11},    {"report", 12}, {"log", 13}, {"help", 14}
 };
 
 class bookstore {
@@ -174,6 +174,10 @@ public:
               std::cout << std::endl;
             }
           }
+          break;
+        case 14:
+          std::cout << "Welcome to REMBookstore 3.6's help  utility" << std::endl;
+          std::cout << "" << std::endl;
           break;
         default:
           error();
