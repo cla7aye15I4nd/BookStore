@@ -6,6 +6,6 @@ make : clean code copy
 clean:
 	rm code -f
 code: main.cpp
-	$(CXX) -o $@ $^ $(APILIB) $(CXXFLAGS)
+	$(CXX) -o $@ $^ -DUSER $(CXXFLAGS)
 copy:
 	cp code judge/bookstore
