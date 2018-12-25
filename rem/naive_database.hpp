@@ -35,8 +35,13 @@ public:
   void print(const string &name) {
     std::ifstream is(dir + name + ".log");
     string s;
-    while (std::getline(is, s))
-      std::cout << s << std::endl;
+    while (std::getline(is, s)) {
+      auto v = split(s);
+      std::cout << "\e[1;33m" << v[0] << "\033[0m";
+      for (uint32_t i = 1; i < v.size(); ++i)
+        std::cout << ' ' << v[i];
+      std::cout << std::endl;
+    }
     is.close();
   }
 

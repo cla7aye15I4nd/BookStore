@@ -8,4 +8,4 @@ clean:
 code: main.cpp
 	$(CXX) -o $@ $^ -DUSER $(CXXFLAGS)
 copy:
-	cp code judge/bookstore
+	cp code tmp/bookstore

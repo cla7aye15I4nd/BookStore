@@ -104,7 +104,7 @@ public:
   void addlog(const string &s) { db.append(username, s); }
 
   void report(const string &name) {
-    std::cout << "username : " << name << std::endl;
+    std::cout << "\e[1;32musername\033[0m : " << name << std::endl;
     db.print(name);
   }
 
